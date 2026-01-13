@@ -68,3 +68,24 @@ class Graph:
                     predecessors[neighbor] = node
 
         return predecessors
+
+    # Returns shortest path from source node to target node (as a list)
+    def get_shortest_path(self, source_node, target_node):
+        if target_node not in self.graph or source_node not in self.graph:
+            return None
+
+        shortest_distances = self.find_shortest_distances(source_node)
+        predecessors = self.find_predecessors(shortest_distances)
+
+        # Backtrack from target node to find predecessors & get whole path
+        path = []
+        curr_node = target_node
+
+        # While current node's distance from source is not zero...
+        while curr_node:
+            # Add predecessor node to path
+            path.append(curr_node)
+            curr_node = predecessors[curr_node]
+
+        # Path is currently in reverse order, so reverse & return
+        return path[::-1]
