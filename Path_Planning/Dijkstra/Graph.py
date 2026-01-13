@@ -53,3 +53,18 @@ class Graph:
                     heappush(priority_queue, (new_distance_from_node1, neighbour))
 
         return distances_from_source_node
+
+    # Find each node's preceding node in its shortest route from source (returns dictionary)
+    def find_predecessors(self, distances_from_source_node):
+        predecessors = {node: None for node in self.graph}
+
+        # For each node's shortest distance from source...
+        for node, distance in distances_from_source_node.items():
+            # For each node's neighbour...
+            for neighbor, weight in self.graph[node].items():
+                # If the distance + neighbour's weight (next poss step) is equal to the shortest distance for that neighbour...
+                if distance + weight == distances_from_source_node[neighbor]:
+                    # Mark this node as that neighbour's predecessor
+                    predecessors[neighbor] = node
+
+        return predecessors
