@@ -13,4 +13,27 @@ graph_values = {
 graph = Graph(graph_values)
 
 class GraphTest(unittest.TestCase):
-    pass
+    def test_find_shortest_distances(self):
+        self.assertEqual(
+            graph.find_shortest_distances('B'),
+            {'A': 3, 'B': 0, 'C': 5.6, 'D': 3.5, 'E': 2.8, 'F': 9.1, 'G': 9.8}
+        )
+
+    def test_find_predecessors(self):
+        self.assertEqual(
+            graph.find_predecessors({'A': 3, 'B': 0, 'C': 5.6, 'D': 3.5, 'E': 2.8, 'F': 9.1, 'G': 9.8}),
+            {'A': 'B', 'B': None, 'C': 'E', 'D': 'B', 'E': 'B', 'F': 'C', 'G': 'E'}
+        )
+
+    def test_get_shortest_path(self):
+        self.assertEqual(
+            graph.get_shortest_path(
+                "B",
+                "F"
+            ),
+            ['B', 'E', 'C', 'F']
+        )
+
+
+if __name__ == '__main__':
+    unittest.main()
